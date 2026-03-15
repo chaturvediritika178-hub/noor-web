@@ -1,0 +1,19 @@
+<svg width="1440" height="800" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="800" fill="#FDFCFB"/>
+  
+  <!-- Image Section -->
+  <rect x="120" y="100" width="550" height="600" rx="2" fill="#EEE"/>
+  <text x="395" y="400" text-anchor="middle" fill="#999" font-family="Inter" font-size="14">Member Image (Grayscale)</text>
+  
+  <!-- Text Section -->
+  <g transform="translate(800, 250)">
+    <text fill="#777" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0.4em" x="0" y="0">FOUNDER &amp; CREATIVE DIRECTOR</text>
+    <text fill="#1A1A1A" font-family="Playfair Display" font-size="72" x="0" y="80">Noorjahan</text>
+    
+    <foreignObject x="0" y="140" width="500" height="200">
+      <p xmlns="http://www.w3.org/1999/xlink" style="margin: 0; color: #444; font-family: Inter; font-size: 20px; font-weight: 300; line-height: 1.6;">
+        With over two decades of experience in visual storytelling, Noorjahan leads the creative vision of the agency, ensuring every frame resonates with life.
+      </p>
+    </foreignObject>
+  </g>
+</svg>

@@ -1,0 +1,117 @@
+:root {
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Inter", "Helvetica Neue", Helvetica, sans-serif;
+  --font-accent: "Cormorant Garamond", serif;
+  --bg-color: #F5F5F5;
+  --text-color: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Scroll Snapping */
+.snap-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: var(--font-primary);
+}
+
+.italic-quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+/* Nav Link Underline */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+}
+
+/* Intro Styles */
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#narrative-text {
+  font-family: var(--font-primary);
+  font-size: 4vw;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.2;
+  font-style: italic;
+  opacity: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Utility */
+.grayscale-img {
+  filter: grayscale(100%);
+  transition: filter 1.5s ease;
+}
+
+.grayscale-img:hover {
+  filter: grayscale(0%);
+}
+
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  z-index: -1;
+}

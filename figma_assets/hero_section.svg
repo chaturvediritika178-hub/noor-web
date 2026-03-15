@@ -1,0 +1,24 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="900" fill="#FDFCFB"/>
+  
+  <!-- Navigation bar shadow/glass -->
+  <rect width="1440" height="80" fill="white" fill-opacity="0.01"/>
+  
+  <!-- Header Text / Logos -->
+  <text fill="#1A1A1A" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="10" font-weight="bold" letter-spacing="0.4em"><tspan x="1200" y="45">WORK</tspan></text>
+  <text fill="#1A1A1A" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="10" font-weight="bold" letter-spacing="0.4em"><tspan x="1260" y="45">TEAM</tspan></text>
+  <text fill="#1A1A1A" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="10" font-weight="bold" letter-spacing="0.4em"><tspan x="1320" y="45">CONTACT</tspan></text>
+  
+  <!-- Content -->
+  <g transform="translate(420, 200)">
+    <rect width="600" height="150" fill="black" fill-opacity="0.05"/>
+    <text fill="#000" font-family="Playfair Display" font-size="80" letter-spacing="-0.02em" text-anchor="middle" x="300" y="100">Noorjahan</text>
+  </g>
+  
+  <text fill="#777" font-family="Inter" font-size="14" letter-spacing="0.6em" text-anchor="middle" x="720" y="400">CINEMATIC EXCELLENCE IN EVERY FRAME</text>
+  
+  <!-- Video Player Placeholder -->
+  <rect x="120" y="480" width="1200" height="675" rx="2" fill="black"/>
+  <rect x="120" y="480" width="1200" height="675" rx="2" stroke="white" stroke-opacity="0.1"/>
+  <path d="M700 790L760 825L700 860V790Z" fill="white" fill-opacity="0.3"/>
+</svg>
