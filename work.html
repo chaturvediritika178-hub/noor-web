@@ -53,7 +53,46 @@
             transform: translateY(0);
             opacity: 1;
         }
+        /* Modal Styles */
+        #project-modal {
+            background: rgba(253, 252, 251, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+        }
+        #project-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #project-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        /* Custom Player Controls */
+        .custom-controls {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .video-card:hover .custom-controls {
+            opacity: 1;
+        }
+        .control-btn {
+            transition: all 0.3s ease;
+        }
+        .control-btn:hover {
+            transform: scale(1.1);
+            color: white;
+        }
     </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body class="bg-[#FDFCFB] text-black selection-white">
 
@@ -142,6 +181,46 @@
         </section>
 
         <!-- 
+            PROJECT MODAL
+            Full-screen modal for project details.
+        -->
+        <div id="project-modal" class="fixed inset-0 flex items-center justify-center p-6 md:p-20">
+            <button id="close-modal" class="absolute top-10 right-10 z-[110] group">
+                <div class="w-12 h-12 border border-black/10 rounded-full flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </div>
+            </button>
+            
+            <div class="modal-content w-full max-w-7xl h-full overflow-y-auto bg-transparent flex flex-col md:flex-row gap-12 md:gap-20 py-10">
+                <div class="w-full md:w-2/3 space-y-10">
+                    <div id="modal-video-container" class="aspect-video bg-black rounded-sm shadow-2xl overflow-hidden relative">
+                        <!-- Large preview video injected here -->
+                    </div>
+                    <div class="space-y-6">
+                        <h2 id="modal-title" class="text-4xl md:text-6xl font-serif italic">Project Title</h2>
+                        <p id="modal-desc" class="text-lg md:text-xl font-light opacity-70 leading-relaxed max-w-2xl">
+                            Detailed project description goes here...
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 space-y-12">
+                    <div class="space-y-8">
+                        <div>
+                            <span class="text-[10px] tracking-[0.4em] uppercase opacity-30 block mb-4">Credits</span>
+                            <div id="modal-credits" class="space-y-4">
+                                <!-- Credits injected here -->
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] tracking-[0.4em] uppercase opacity-30 block mb-4">Category</span>
+                            <p id="modal-category" class="text-sm tracking-widest uppercase font-bold">Cinematic Narrative</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
             SOCIAL BAR / FOOTER
             Static footer at the end of the scroll container.
         -->
@@ -171,56 +250,145 @@
 
         // List of projects to display
         const videos = [
-            { id: 'dQw4w9WgXcQ', title: 'Cinematic Narrative I' },
-            { id: '9bZkp7q19f0', title: 'Visual Poetry' },
-            { id: 'L_jWHffIx5E', title: 'The Modern Frame' },
-            { id: 'kJQP7kiw5Fk', title: 'Light & Shadow' },
-            { id: 'JGwWNGJdvx8', title: 'Ethereal Journeys' },
-            { id: 'V-_O7nl0Ii0', title: 'The Director\'s Cut' },
-            { id: '8_45_E_0_8', title: 'Urban Echoes' },
-            { id: '9_45_E_0_9', title: 'Nature\'s Whisper' },
-            { id: 'dQw4w9WgXcQ', title: 'Cinematic Narrative II' },
-            { id: '9bZkp7q19f0', title: 'Visual Poetry II' },
-            { id: 'L_jWHffIx5E', title: 'The Modern Frame II' },
-            { id: 'kJQP7kiw5Fk', title: 'Light & Shadow II' },
-            // DUMMY PROJECT (Commented Out)
-            // { id: 'YOUTUBE_ID', title: 'New Project Title' },
+            { 
+                id: 'dQw4w9WgXcQ', 
+                title: 'Cinematic Narrative I',
+                desc: 'An exploration of urban solitude through a minimalist lens. This project focuses on the quiet moments that define our daily existence in the concrete jungle.',
+                category: 'Short Film',
+                credits: [
+                    { label: 'Director', name: 'Noorjahan' },
+                    { label: 'Cinematography', name: 'Julian Vane' },
+                    { label: 'Editor', name: 'Elena Rossi' }
+                ]
+            },
+            { 
+                id: '9bZkp7q19f0', 
+                title: 'Visual Poetry',
+                desc: 'A rhythmic journey through the natural world, capturing the delicate balance between light and shadow in the wild.',
+                category: 'Experimental',
+                credits: [
+                    { label: 'Director', name: 'Marcus Thorne' },
+                    { label: 'Sound', name: 'Sarah Chen' }
+                ]
+            },
+            { 
+                id: 'L_jWHffIx5E', 
+                title: 'The Modern Frame',
+                desc: 'A documentary series exploring contemporary architecture and its impact on human interaction.',
+                category: 'Documentary',
+                credits: [
+                    { label: 'Director', name: 'Noorjahan' },
+                    { label: 'Research', name: 'Elena Rossi' }
+                ]
+            },
+            { 
+                id: 'kJQP7kiw5Fk', 
+                title: 'Light & Shadow',
+                desc: 'A high-contrast study of human emotion, filmed entirely in black and white to emphasize raw feeling.',
+                category: 'Art Film',
+                credits: [
+                    { label: 'Director', name: 'Julian Vane' }
+                ]
+            },
+            { 
+                id: 'JGwWNGJdvx8', 
+                title: 'Ethereal Journeys',
+                desc: 'A dreamlike sequence exploring the boundaries of reality and imagination.',
+                category: 'Music Video',
+                credits: [
+                    { label: 'Director', name: 'Sarah Chen' },
+                    { label: 'VFX', name: 'Marcus Thorne' }
+                ]
+            }
         ];
 
         let visibleCount = 5;
         const videoContainer = document.getElementById('video-container');
         const loadMoreSection = document.getElementById('load-more-section');
         const loadMoreBtn = document.getElementById('load-more-btn');
+        const modal = document.getElementById('project-modal');
+        const closeModal = document.getElementById('close-modal');
+        
+        let players = {}; // Store YT players
+
+        function onYouTubeIframeAPIReady() {
+            renderVideos();
+        }
 
         function renderVideos() {
-            const fragment = document.createDocumentFragment();
             const slice = videos.slice(videoContainer.children.length, visibleCount);
             
             slice.forEach((video, index) => {
+                const videoIdx = videoContainer.children.length;
                 const section = document.createElement('section');
                 section.className = 'snap-section h-screen w-full flex items-center justify-center p-4 md:p-10';
                 section.innerHTML = `
-                    <div class="relative w-full max-w-6xl aspect-video bg-black overflow-hidden rounded-sm shadow-2xl group opacity-0 scale-95 transition-all duration-1000 video-card">
-                        <div class="parallax-container w-full h-full">
-                            <iframe 
-                                class="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity duration-1000"
-                                src="https://www.youtube.com/embed/${video.id}?autoplay=0&mute=1&controls=1&rel=0" 
-                                title="${video.title}"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen
-                            ></iframe>
+                    <div class="relative w-full max-w-6xl aspect-video bg-black overflow-hidden rounded-sm shadow-2xl group opacity-0 scale-95 transition-all duration-1000 video-card cursor-pointer" data-index="${videoIdx}">
+                        <div class="parallax-container w-full h-full pointer-events-none">
+                            <div id="player-${videoIdx}" class="w-full h-full"></div>
                         </div>
-                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                            <span class="text-[10px] tracking-[0.4em] uppercase text-white/60 mb-1 block">Project ${videoContainer.children.length + index + 1}</span>
-                            <h2 class="text-xl font-serif italic text-white">${video.title}</h2>
+                        
+                        <!-- Custom Controls Overlay -->
+                        <div class="absolute inset-0 custom-controls flex flex-col justify-end p-6 md:p-10 z-10">
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex items-center space-x-6">
+                                    <button class="control-btn play-pause-btn" data-index="${videoIdx}">
+                                        <i data-lucide="play" class="w-8 h-8 text-white/80"></i>
+                                    </button>
+                                    <button class="control-btn volume-btn" data-index="${videoIdx}">
+                                        <i data-lucide="volume-2" class="w-6 h-6 text-white/80"></i>
+                                    </button>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[10px] tracking-[0.4em] uppercase text-white/60 mb-1 block">Project ${videoIdx + 1}</span>
+                                    <h2 class="text-xl md:text-3xl font-serif italic text-white">${video.title}</h2>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000"></div>
                     </div>
                 `;
-                fragment.appendChild(section);
+                videoContainer.appendChild(section);
+
+                // Initialize YT Player
+                players[videoIdx] = new YT.Player(`player-${videoIdx}`, {
+                    videoId: video.id,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 0,
+                        rel: 0,
+                        showinfo: 0,
+                        modestbranding: 1,
+                        iv_load_policy: 3,
+                        mute: 1
+                    },
+                    events: {
+                        onReady: (event) => {
+                            // Player ready
+                        }
+                    }
+                });
+
+                // Add click listener to card for modal
+                section.querySelector('.video-card').addEventListener('click', (e) => {
+                    if (!e.target.closest('.control-btn')) {
+                        openProjectModal(video);
+                    }
+                });
+
+                // Add listeners for custom controls
+                section.querySelector('.play-pause-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    togglePlay(videoIdx);
+                });
+                section.querySelector('.volume-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleMute(videoIdx);
+                });
             });
             
-            videoContainer.appendChild(fragment);
+            lucide.createIcons();
             
             if (visibleCount < videos.length) {
                 loadMoreSection.classList.remove('hidden');
@@ -228,7 +396,7 @@
                 loadMoreSection.classList.add('hidden');
             }
 
-            // Observe new video cards
+            // Observe new video cards for fade-in
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -256,6 +424,65 @@
             });
         }
 
+        function togglePlay(index) {
+            const player = players[index];
+            const btn = document.querySelector(`.play-pause-btn[data-index="${index}"] i`);
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                player.pauseVideo();
+                btn.setAttribute('data-lucide', 'play');
+            } else {
+                player.playVideo();
+                btn.setAttribute('data-lucide', 'pause');
+            }
+            lucide.createIcons();
+        }
+
+        function toggleMute(index) {
+            const player = players[index];
+            const btn = document.querySelector(`.volume-btn[data-index="${index}"] i`);
+            if (player.isMuted()) {
+                player.unMute();
+                btn.setAttribute('data-lucide', 'volume-2');
+            } else {
+                player.mute();
+                btn.setAttribute('data-lucide', 'volume-x');
+            }
+            lucide.createIcons();
+        }
+
+        function openProjectModal(video) {
+            document.getElementById('modal-title').textContent = video.title;
+            document.getElementById('modal-desc').textContent = video.desc;
+            document.getElementById('modal-category').textContent = video.category;
+            
+            const creditsContainer = document.getElementById('modal-credits');
+            creditsContainer.innerHTML = video.credits.map(c => `
+                <div class="flex justify-between border-b border-black/5 pb-2">
+                    <span class="text-xs font-light opacity-50">${c.label}</span>
+                    <span class="text-xs font-bold uppercase tracking-widest">${c.name}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('modal-video-container').innerHTML = `
+                <iframe 
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/${video.id}?autoplay=1&mute=0&controls=1" 
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.getElementById('modal-video-container').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        });
+
         loadMoreBtn.addEventListener('click', () => {
             visibleCount = Math.min(visibleCount + 5, videos.length);
             renderVideos();
@@ -265,8 +492,6 @@
         gsap.to('#work-title', { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" });
         gsap.to('#work-desc', { opacity: 1, duration: 1, delay: 0.8 });
         gsap.to('#work-scroll-hint', { opacity: 0.4, duration: 1, delay: 1.2 });
-
-        renderVideos();
 
         // Scroll Dot Animation
         gsap.to('.scroll-dot', {
