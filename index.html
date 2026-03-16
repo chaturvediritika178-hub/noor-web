@@ -1,13 +1,421 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noorjahan Moving Images</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noorjahan | Cinematic Excellence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .italic-quote { font-family: 'Playfair Display', serif; font-style: italic; }
+        .char { display: inline-block; }
+        [v-cloak] { display: none; }
+        .selection-white::selection { background: black; color: white; }
+        
+        /* Glassmorphic Header */
+        .glass-header {
+            background: rgba(253, 252, 251, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-scrolled {
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+            background: rgba(253, 252, 251, 0.9);
+        }
+        
+        .header-scrolled .logo-img {
+            width: 6rem !important;
+        }
 
+        @media (min-width: 768px) {
+            .header-scrolled .logo-img {
+                width: 7rem !important;
+            }
+        }
+
+        /* Social Icons */
+        #social-bar {
+            transition: all 0.5s ease;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        #social-bar.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Better Effects */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#FDFCFB] text-black selection-white">
+
+    <!-- Intro Animation -->
+    <div id="intro" class="fixed inset-0 z-[100] bg-[#FDFCFB] overflow-hidden">
+        <!-- Video Background -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <video id="intro-video" class="w-full h-full object-cover opacity-0 transition-opacity duration-1000" muted playsinline>
+                <source src="assets/intro_video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Logo -->
+        <div id="intro-logo" class="absolute pointer-events-none z-50">
+            <img src="assets/logo.png" alt="Noorjahan Logo" class="w-40 md:w-64 h-auto">
+        </div>
+
+        <!-- Tagline -->
+        <div id="intro-tagline-container" class="absolute bottom-10 md:bottom-20 left-0 w-full flex flex-col items-center px-6 md:px-10 z-50 opacity-0">
+            <div class="flex flex-col items-center space-y-4 md:space-y-8 w-full max-w-4xl">
+                <div class="relative w-full flex flex-col items-center text-center">
+                    <div class="tagline-text text-base sm:text-lg md:text-3xl font-light tracking-[0.1em] md:tracking-[0.15em] uppercase italic-quote text-black w-full flex flex-col items-center">
+                        <div class="line-1 mb-1 md:mb-2"></div>
+                        <div class="line-2"></div>
+                    </div>
+                </div>
+                <!-- Dots -->
+                <div id="intro-dots" class="flex space-x-4 md:space-x-8 pt-2 md:pt-4 opacity-0">
+                    <div class="dot w-3 h-3 md:w-4 md:h-4 bg-black rounded-full shadow-sm"></div>
+                    <div class="dot w-3 h-3 md:w-4 md:h-4 bg-black rounded-full shadow-sm"></div>
+                    <div class="dot w-3 h-3 md:w-4 md:h-4 bg-black rounded-full shadow-sm"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden during intro) -->
+    <div id="main-content" class="opacity-0">
+        <!-- Header -->
+        <header id="main-header" class="fixed top-0 left-0 w-full z-40 px-6 md:px-10 py-6 md:py-8 flex justify-between items-center glass-header">
+            <a href="index.html" class="group">
+                <img src="assets/logo.png" alt="Logo" class="logo-img w-28 md:w-40 h-auto transition-all duration-500">
+            </a>
+            <nav class="hidden md:flex space-x-12">
+                <a href="index.html" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Home</a>
+                <a href="work.html" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Work</a>
+                <a href="team.html" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Team</a>
+                <a href="contact.html" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Contact</a>
+            </nav>
+            <button class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </header>
+
+        <!-- Scroll Indicator -->
+        <div class="fixed bottom-12 right-6 md:bottom-32 md:right-8 z-40">
+            <a href="work.html" class="group block">
+                <div class="bg-white/90 backdrop-blur-2xl text-black px-6 py-3 md:px-8 md:py-4 rounded-full flex items-center space-x-4 md:space-x-6 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-black/5 relative overflow-hidden">
+                    <div class="flex flex-col items-start">
+                        <span class="text-[8px] md:text-[9px] tracking-[0.4em] uppercase opacity-30 font-bold">Scroll Down</span>
+                        <span class="text-[11px] md:text-xs tracking-[0.3em] uppercase font-bold opacity-60">Work</span>
+                    </div>
+                    <div class="relative w-5 h-8 md:w-6 md:h-10 border border-black/10 rounded-full flex justify-center pt-1 md:pt-2">
+                        <div class="scroll-dot w-1 h-1 bg-black/40 rounded-full hidden md:block"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <main class="min-h-screen flex flex-col items-center">
+            <!-- Hero Section -->
+            <section class="w-full min-h-screen flex flex-col items-center justify-center px-6 md:px-10 text-center space-y-12 pt-32 md:pt-40">
+                <div class="hero-text space-y-6 max-w-5xl w-full flex flex-col items-center reveal">
+                    <img src="assets/logo.png" alt="Noorjahan" class="w-full max-w-3xl text-black">
+                    <p class="text-sm md:text-2xl font-light tracking-[0.6em] uppercase opacity-50">
+                        Cinematic Excellence in Every Frame
+                    </p>
+                </div>
+
+                <div class="hero-video relative w-full max-w-7xl aspect-video overflow-hidden rounded-sm shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] bg-black group reveal">
+                    <iframe 
+                        class="w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-[3000ms] ease-out"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=0&loop=1&playlist=dQw4w9WgXcQ" 
+                        title="Hero Video"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                    <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+                    <div class="absolute inset-0 border border-white/10 pointer-events-none"></div>
+                </div>
+            </section>
+
+            <!-- What We Do Section -->
+            <section id="what-we-do" class="w-full max-w-7xl px-6 md:px-10 py-24 md:py-40 space-y-12">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="what-we-do-content space-y-8 reveal">
+                        <div class="space-y-2">
+                            <span class="text-[11px] tracking-[0.6em] uppercase opacity-30">Our Expertise</span>
+                            <h2 class="text-6xl md:text-8xl font-serif italic leading-none">What We Do</h2>
+                        </div>
+                        <p class="text-xl md:text-2xl font-light leading-relaxed opacity-70">
+                            We are a full-service film production agency specializing in high-end cinematic storytelling. 
+                            Our collective of directors, cinematographers, and editors work in harmony to transform 
+                            visionary concepts into moving legacies.
+                        </p>
+                        <div class="grid grid-cols-2 gap-8 pt-4">
+                            <div class="space-y-8 group">
+                                <div class="w-16 h-16 border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500">
+                                    <i data-lucide="camera" class="w-6 h-6 opacity-60 group-hover:opacity-100"></i>
+                                </div>
+                                <div class="space-y-4">
+                                    <h3 class="text-sm tracking-widest uppercase font-bold">Production</h3>
+                                    <p class="text-sm font-light opacity-50 leading-relaxed">From pre-production planning to on-set execution.</p>
+                                </div>
+                            </div>
+                            <div class="space-y-8 group">
+                                <div class="w-16 h-16 border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500">
+                                    <i data-lucide="film" class="w-6 h-6 opacity-60 group-hover:opacity-100"></i>
+                                </div>
+                                <div class="space-y-4">
+                                    <h3 class="text-sm tracking-widest uppercase font-bold">Post-Production</h3>
+                                    <p class="text-sm font-light opacity-50 leading-relaxed">Expert editing, color grading, and sound design.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="what-we-do-image relative aspect-[4/5] bg-stone-100 overflow-hidden rounded-sm shadow-2xl group reveal">
+                        <img 
+                            src="https://picsum.photos/seed/production/800/1000" 
+                            alt="Production Process" 
+                            class="parallax-img w-full h-[120%] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-[3000ms] ease-out -top-[10%]"
+                            referrerpolicy="no-referrer"
+                        >
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-1000"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Philosophy Section -->
+            <section class="w-full py-24 md:py-40 px-6 md:px-10 text-center">
+                <div class="philosophy-content max-w-5xl mx-auto space-y-12 reveal">
+                    <img src="assets/logo.png" alt="Logo" class="w-32 mx-auto opacity-10">
+                    <blockquote class="text-5xl md:text-8xl font-serif italic leading-[1.1] tracking-tight italic-quote">
+                        "Cinema is a matter of what's in the frame and what's out."
+                    </blockquote>
+                    <div class="flex items-center justify-center space-x-6">
+                        <div class="w-12 h-[1px] bg-black/20"></div>
+                        <p class="text-xs tracking-[0.6em] uppercase opacity-40">Noorjahan Philosophy</p>
+                        <div class="w-12 h-[1px] bg-black/20"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Social Bar (Visible at end) -->
+        <div id="social-bar" class="fixed bottom-0 left-0 w-full z-50 px-6 md:px-10 py-8 flex flex-col md:flex-row justify-between items-center bg-[#FDFCFB] border-t border-black/5">
+            <div class="flex space-x-8 mb-6 md:mb-0">
+                <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Instagram</a>
+                <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Vimeo</a>
+                <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">LinkedIn</a>
+            </div>
+            <div class="flex flex-col items-center md:items-end space-y-2">
+                <p class="text-[11px] tracking-[0.2em] uppercase opacity-30">© 2026 Noorjahan Productions</p>
+                <p class="text-[11px] tracking-[0.2em] uppercase opacity-30 italic">Where Cinema becomes Life</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Parallax Effect for Images
+        gsap.utils.toArray('.parallax-img').forEach(img => {
+            gsap.to(img, {
+                yPercent: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: img.parentElement,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+
+        // Intro Animation Logic
+        const intro = document.getElementById('intro');
+        const introVideo = document.getElementById('intro-video');
+        const introLogo = document.getElementById('intro-logo');
+        const introTagline = document.getElementById('intro-tagline-container');
+        const introDots = document.getElementById('intro-dots');
+        const mainContent = document.getElementById('main-content');
+        const line1 = document.querySelector('.line-1');
+        const line2 = document.querySelector('.line-2');
+
+        const line1Text = "Where Cinema becomes Life";
+        const line2Text = "and Life becomes Cinema";
+
+        // Helper to split text into chars
+        function splitText(element, text) {
+            element.innerHTML = text.split('').map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+            return element.querySelectorAll('.char');
+        }
+
+        const chars1 = splitText(line1, line1Text);
+        const chars2 = splitText(line2, line2Text);
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                gsap.to(intro, {
+                    opacity: 0,
+                    duration: 1,
+                    onComplete: () => {
+                        intro.style.display = 'none';
+                        gsap.to(mainContent, { opacity: 1, duration: 1 });
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+
+        // Initial State
+        document.body.style.overflow = 'hidden';
+        gsap.set([chars1, chars2], { opacity: 0 });
+
+        // Stage 1: Logo Fade In (Smooth, no bounce)
+        tl.fromTo(introLogo, 
+            { opacity: 0, scale: 0.8, xPercent: -50, yPercent: -50, left: '50%', top: '50%' },
+            { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" }
+        );
+        tl.to({}, { duration: 1.5 });
+
+        // Stage 2: Logo moves to Top-Left
+        tl.to(introLogo, {
+            left: '20px',
+            top: '20px',
+            xPercent: 0,
+            yPercent: 0,
+            scale: 0.35,
+            duration: 2,
+            ease: "power3.inOut"
+        });
+
+        // Stage 3: Video
+        tl.add(() => {
+            introVideo.currentTime = 0;
+            introVideo.play();
+            introVideo.style.opacity = '1';
+        });
+        tl.to({}, { duration: 6 });
+
+        // Stage 4: Video Fade Out
+        tl.to(introVideo, { opacity: 0, duration: 1.5 });
+        tl.to({}, { duration: 1 });
+
+        // Stage 5: Tagline
+        tl.to(introTagline, { opacity: 1, duration: 0.5 });
+        
+        // Line 1 Typewriter (No pencil)
+        const syncObj1 = { progress: 0 };
+        tl.to(syncObj1, {
+            progress: 1,
+            duration: 2.5,
+            ease: "none",
+            onUpdate: () => {
+                const charIndex = Math.floor(syncObj1.progress * chars1.length);
+                chars1.forEach((char, i) => {
+                    if (i <= charIndex) char.style.opacity = '1';
+                });
+            }
+        });
+
+        // Line 2 Typewriter (No pencil)
+        const syncObj2 = { progress: 0 };
+        tl.to(syncObj2, {
+            progress: 1,
+            duration: 2.5,
+            ease: "none",
+            onUpdate: () => {
+                const charIndex = Math.floor(syncObj2.progress * chars2.length);
+                chars2.forEach((char, i) => {
+                    if (i <= charIndex) char.style.opacity = '1';
+                });
+            }
+        });
+
+        // Stage 6: Dots
+        tl.to(introDots, { opacity: 1, duration: 0.5 });
+        const dots = introDots.querySelectorAll('.dot');
+        tl.fromTo(dots, 
+            { opacity: 0, scale: 0, y: 20 },
+            { opacity: 1, scale: 1, y: 0, stagger: 0.3, duration: 1, ease: "power2.out" }
+        );
+        tl.to(dots, {
+            y: "-=8",
+            scale: 1.1,
+            duration: 0.4,
+            repeat: 5,
+            yoyo: true,
+            ease: "sine.inOut",
+            stagger: 0.15
+        });
+
+        tl.to({}, { duration: 1.5 });
+
+        // Scroll Dot Animation
+        gsap.to('.scroll-dot', {
+            y: 10,
+            opacity: 0,
+            duration: 2.5,
+            repeat: -1,
+            ease: "easeInOut"
+        });
+
+        // Header and Social Bar Logic
+        const header = document.getElementById('main-header');
+        const socialBar = document.getElementById('social-bar');
+        
+        window.addEventListener('scroll', () => {
+            // Header Scroll Effect
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+
+            // Social Bar Visibility (End of page)
+            const scrollPercent = (window.innerHeight + window.scrollY) / document.body.offsetHeight;
+            if (scrollPercent > 0.95) {
+                socialBar.classList.add('visible');
+            } else {
+                socialBar.classList.remove('visible');
+            }
+
+            // Reveal Animations
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                const revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('active');
+                }
+            });
+        });
+
+        // Initial Reveal check
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>

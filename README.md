@@ -1,20 +1,30 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Noorjahan Static Site
 
-# Run and deploy your AI Studio app
+This is a simple HTML/CSS/JS static site. It does not require any build steps.
 
-This contains everything you need to run your app locally.
+## How to run locally
 
-View your app in AI Studio: https://ai.studio/apps/cc1a7c08-56fe-4266-97e7-d68f8b071499
+1.  Open any `.html` file directly in your browser.
+2.  Alternatively, if you have Node.js installed, run:
+    ```bash
+    npm install
+    npm run dev
+    ```
+    Then open `http://localhost:3000`.
 
-## Run Locally
+## How to deploy to Hostinger
 
-**Prerequisites:**  Node.js
+1.  Log in to your Hostinger Control Panel.
+2.  Go to the **File Manager**.
+3.  Open the `public_html` folder.
+4.  Upload the following files and folders:
+    *   `index.html`
+    *   `work.html`
+    *   `team.html`
+    *   `contact.html`
+    *   `assets/` (the entire folder)
 
+That's it! Your site will be live immediately.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Note on Internet Connection
+This site uses CDNs for Tailwind CSS, GSAP, and Lucide icons. An internet connection is required for these styles and icons to load correctly.
