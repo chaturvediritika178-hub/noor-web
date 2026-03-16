@@ -57,7 +57,12 @@
 </head>
 <body class="bg-[#FDFCFB] text-black selection-white">
 
-    <!-- Header -->
+    <!-- 
+        ================================================================
+        NAVIGATION HEADER
+        Glassmorphic effect that changes on scroll.
+        ================================================================
+    -->
     <header id="main-header" class="fixed top-0 left-0 w-full z-40 px-6 md:px-10 py-6 md:py-8 flex justify-between items-center glass-header">
         <a href="index.html" class="group">
             <img src="assets/logo.png" alt="Logo" class="logo-img w-28 md:w-40 h-auto transition-all duration-500">
@@ -88,8 +93,17 @@
         </a>
     </div>
 
+    <!-- 
+        ================================================================
+        MAIN CONTENT (SNAP CONTAINER)
+        This container uses scroll-snapping for a cinematic feel.
+        ================================================================
+    -->
     <main class="h-screen overflow-y-auto snap-container scroll-smooth pt-20 md:pt-32">
-        <!-- Intro Section -->
+        <!-- 
+            INTRO SECTION
+            The opening text for the work page.
+        -->
         <section class="snap-section h-screen flex flex-col justify-center px-6 md:px-10 max-w-6xl mx-auto">
             <div class="max-w-2xl">
                 <h1 class="text-5xl md:text-8xl font-serif italic mb-6 md:mb-8 opacity-0 translate-y-8" id="work-title">
@@ -106,12 +120,18 @@
             </div>
         </section>
 
-        <!-- Video Sections -->
+        <!-- 
+            VIDEO SECTIONS
+            Individual projects are injected here via JavaScript.
+        -->
         <div id="video-container">
             <!-- Videos will be injected here -->
         </div>
 
-        <!-- Load More Section -->
+        <!-- 
+            LOAD MORE SECTION
+            Button to load more projects if available.
+        -->
         <section id="load-more-section" class="snap-section h-screen flex items-center justify-center py-10 hidden">
             <button id="load-more-btn" class="group relative px-12 py-5 border border-black/10 overflow-hidden transition-all duration-500 hover:border-black">
                 <span class="relative z-10 text-[10px] tracking-[0.6em] uppercase group-hover:text-white transition-colors duration-500">
@@ -121,7 +141,10 @@
             </button>
         </section>
 
-        <!-- Social Bar (Visible at end) -->
+        <!-- 
+            SOCIAL BAR / FOOTER
+            Static footer at the end of the scroll container.
+        -->
         <div id="social-bar" class="w-full z-50 px-6 md:px-10 py-8 flex flex-col md:flex-row justify-between items-center bg-[#FDFCFB] border-t border-black/5">
             <div class="flex space-x-8 mb-6 md:mb-0">
                 <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Instagram</a>
@@ -136,9 +159,17 @@
     </main>
 
     <script>
+        /* 
+            ================================================================
+            WORK PAGE LOGIC
+            Handles video rendering, lazy loading, and scroll animations.
+            ================================================================
+        */
+
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
 
+        // List of projects to display
         const videos = [
             { id: 'dQw4w9WgXcQ', title: 'Cinematic Narrative I' },
             { id: '9bZkp7q19f0', title: 'Visual Poetry' },
@@ -152,6 +183,8 @@
             { id: '9bZkp7q19f0', title: 'Visual Poetry II' },
             { id: 'L_jWHffIx5E', title: 'The Modern Frame II' },
             { id: 'kJQP7kiw5Fk', title: 'Light & Shadow II' },
+            // DUMMY PROJECT (Commented Out)
+            // { id: 'YOUTUBE_ID', title: 'New Project Title' },
         ];
 
         let visibleCount = 5;

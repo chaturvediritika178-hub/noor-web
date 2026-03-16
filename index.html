@@ -68,7 +68,12 @@
 </head>
 <body class="bg-[#FDFCFB] text-black selection-white">
 
-    <!-- Intro Animation -->
+    <!-- 
+        ================================================================
+        INTRO ANIMATION SECTION
+        This section handles the initial loading animation with video and logo.
+        ================================================================
+    -->
     <div id="intro" class="fixed inset-0 z-[100] bg-[#FDFCFB] overflow-hidden">
         <!-- Video Background -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -101,9 +106,17 @@
         </div>
     </div>
 
-    <!-- Main Content (Hidden during intro) -->
+    <!-- 
+        ================================================================
+        MAIN CONTENT CONTAINER
+        Everything inside this div is hidden until the intro animation finishes.
+        ================================================================
+    -->
     <div id="main-content" class="opacity-0">
-        <!-- Header -->
+        <!-- 
+            NAVIGATION HEADER
+            Glassmorphic effect that changes on scroll.
+        -->
         <header id="main-header" class="fixed top-0 left-0 w-full z-40 px-6 md:px-10 py-6 md:py-8 flex justify-between items-center glass-header">
             <a href="index.html" class="group">
                 <img src="assets/logo.png" alt="Logo" class="logo-img w-28 md:w-40 h-auto transition-all duration-500">
@@ -134,6 +147,10 @@
             </a>
         </div>
 
+        <!-- 
+            HERO SECTION
+            The first section users see. Features the logo and a cinematic video.
+        -->
         <main class="min-h-screen flex flex-col items-center">
             <!-- Hero Section -->
             <section class="w-full min-h-screen flex flex-col items-center justify-center px-6 md:px-10 text-center space-y-12 pt-32 md:pt-40">
@@ -158,7 +175,10 @@
                 </div>
             </section>
 
-            <!-- What We Do Section -->
+            <!-- 
+                WHAT WE DO SECTION
+                Explains services with icons and a parallax image.
+            -->
             <section id="what-we-do" class="w-full max-w-7xl px-6 md:px-10 py-24 md:py-40 space-y-12">
                 <div class="grid md:grid-cols-2 gap-16 items-center">
                     <div class="what-we-do-content space-y-8 reveal">
@@ -204,7 +224,10 @@
                 </div>
             </section>
 
-            <!-- Philosophy Section -->
+            <!-- 
+                PHILOSOPHY SECTION
+                A large quote section with a minimalist design.
+            -->
             <section class="w-full py-24 md:py-40 px-6 md:px-10 text-center">
                 <div class="philosophy-content max-w-5xl mx-auto space-y-12 reveal">
                     <img src="assets/logo.png" alt="Logo" class="w-32 mx-auto opacity-10">
@@ -218,9 +241,25 @@
                     </div>
                 </div>
             </section>
+            <!-- 
+                DUMMY SECTION TEMPLATE (Commented Out)
+                Copy and uncomment this to add a new section easily.
+            -->
+            <!--
+            <section class="w-full py-24 md:py-40 px-6 md:px-10">
+                <div class="max-w-7xl mx-auto reveal">
+                    <h2 class="text-4xl md:text-6xl font-serif italic mb-8">New Section Title</h2>
+                    <p class="text-lg opacity-70">Add your content here...</p>
+                </div>
+            </section>
+            -->
+
         </main>
 
-        <!-- Social Bar (Visible at end) -->
+        <!-- 
+            SOCIAL BAR / FOOTER
+            Appears at the bottom of the page when scrolling ends.
+        -->
         <div id="social-bar" class="fixed bottom-0 left-0 w-full z-50 px-6 md:px-10 py-8 flex flex-col md:flex-row justify-between items-center bg-[#FDFCFB] border-t border-black/5">
             <div class="flex space-x-8 mb-6 md:mb-0">
                 <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Instagram</a>
@@ -235,11 +274,17 @@
     </div>
 
     <script>
+        /* 
+            ================================================================
+            TRANSITION & ANIMATION LOGIC (GSAP)
+            ================================================================
+        */
+
         // Initialize Lucide icons
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
 
-        // Parallax Effect for Images
+        // Parallax Effect: Images move slightly slower than scroll for depth
         gsap.utils.toArray('.parallax-img').forEach(img => {
             gsap.to(img, {
                 yPercent: 20,
@@ -275,6 +320,10 @@
         const chars1 = splitText(line1, line1Text);
         const chars2 = splitText(line2, line2Text);
 
+        /* 
+            INTRO TIMELINE
+            Controls the sequence of the opening animation.
+        */
         const tl = gsap.timeline({
             onComplete: () => {
                 gsap.to(intro, {

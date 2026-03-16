@@ -57,7 +57,12 @@
 </head>
 <body class="bg-[#FDFCFB] text-black selection-white">
 
-    <!-- Header -->
+    <!-- 
+        ================================================================
+        NAVIGATION HEADER
+        Glassmorphic effect that changes on scroll.
+        ================================================================
+    -->
     <header id="main-header" class="fixed top-0 left-0 w-full z-40 px-6 md:px-10 py-6 md:py-8 flex justify-between items-center glass-header">
         <a href="index.html" class="group">
             <img src="assets/logo.png" alt="Logo" class="logo-img w-28 md:w-40 h-auto transition-all duration-500">
@@ -88,12 +93,25 @@
         </a>
     </div>
 
+    <!-- 
+        ================================================================
+        MAIN CONTENT (SNAP CONTAINER)
+        This container uses scroll-snapping for a cinematic feel.
+        ================================================================
+    -->
     <main class="h-screen overflow-y-auto snap-container scroll-smooth">
+        <!-- 
+            TEAM CONTAINER
+            Team members are injected here via JavaScript.
+        -->
         <div id="team-container">
             <!-- Team members will be injected here -->
         </div>
 
-        <!-- Social Bar (Visible at end) -->
+        <!-- 
+            SOCIAL BAR / FOOTER
+            Static footer at the end of the scroll container.
+        -->
         <div id="social-bar" class="w-full z-50 px-6 md:px-10 py-8 flex flex-col md:flex-row justify-between items-center bg-[#FDFCFB] border-t border-black/5">
             <div class="flex space-x-8 mb-6 md:mb-0">
                 <a href="#" class="text-[11px] tracking-[0.4em] uppercase font-bold hover:opacity-50 transition-opacity">Instagram</a>
@@ -108,9 +126,17 @@
     </main>
 
     <script>
+        /* 
+            ================================================================
+            TEAM PAGE LOGIC
+            Handles member rendering, parallax effects, and scroll animations.
+            ================================================================
+        */
+
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
 
+        // List of team members to display
         const members = [
             {
                 name: "Noorjahan",
@@ -141,7 +167,16 @@
                 role: "Sound Architect",
                 bio: "Sarah understands that cinema is half-heard. Her soundscapes provide the atmospheric depth that makes our visuals truly immersive.",
                 image: "https://picsum.photos/seed/sound/800/1000"
+            },
+            // DUMMY MEMBER (Commented Out)
+            /*
+            {
+                name: "New Member",
+                role: "Role Title",
+                bio: "Short biography goes here...",
+                image: "https://picsum.photos/seed/new/800/1000"
             }
+            */
         ];
 
         const teamContainer = document.getElementById('team-container');
